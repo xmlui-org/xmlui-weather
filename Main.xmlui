@@ -3,7 +3,8 @@
   <DataSource
     id="weatherData"
     url="https://wttr.in/{city}?format=j1"
-    onError="(error) => { errorMessage = 'Could not load weather data. Please try again.'; }" />
+    errorNotificationMessage=""
+    onError="(error) => { errorMessage = 'Could not find weather data for ' + city + '. Please check the city name.'; }" />
 
   <CVStack gap="$space-8" padding="$space-6">
 
