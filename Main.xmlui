@@ -1,4 +1,4 @@
-<App var.city="Santa Rosa, CA" var.errorMessage="">
+<App var.city="Santa Rosa, CA" var.errorMessage="" var.tempUnit="F">
 
   <DataSource
     id="weatherData"
@@ -6,12 +6,12 @@
     onError="(error) => { errorMessage = 'Could not load weather data. Please try again.'; }" />
 
   <CVStack gap="$space-8" padding="$space-6">
-    
+
     <HStack gap="$space-2" verticalAlignment="center">
       <H1>Weather Dashboard</H1>
     </HStack>
 
-    <HStack gap="$space-2" verticalAlignment="center">
+    <HStack gap="$space-4" verticalAlignment="center">
       <TextBox
         id="cityInput"
         placeholder="Enter city name..."
@@ -19,13 +19,23 @@
         width="15rem"
         onDidChange="(val) => { city = val; }"
         onLostFocus="() => { weatherData.refetch(); errorMessage = ''; }" />
+      <HStack gap="$space-2" verticalAlignment="center">
+        <RadioGroup
+          initialValue="{tempUnit}"
+          onDidChange="(val) => { tempUnit = val; }">
+          <HStack gap="$space-2">
+            <Option label="°F" value="F" />
+            <Option label="°C" value="C" />
+          </HStack>
+        </RadioGroup>
+      </HStack>
     </HStack>
 
     <Text when="{errorMessage}" variant="destructive">
       {errorMessage}
     </Text>
 
-    <VStack 
+    <VStack
       when="{weatherData.inProgress}"
       gap="$space-4"
       horizontalAlignment="center">
@@ -33,13 +43,13 @@
       <Text variant="secondary">Loading weather data...</Text>
     </VStack>
 
-    <CVStack 
+    <CVStack
       when="{weatherData.loaded && weatherData.value}"
       gap="$space-6"
       padding="$space-6"
       borderRadius="$borderRadius-lg"
       backgroundColor="$color-background-secondary">
-      
+
       <VStack gap="$space-2">
         <H2>{city}</H2>
         <Text variant="secondary">{weatherData.value.nearest_area[0].country[0].value}</Text>
@@ -49,12 +59,12 @@
         <VStack gap="$space-2">
           <HStack gap="$space-2" verticalAlignment="baseline">
             <Text fontSize="4rem" fontWeight="bold">
-              {weatherData.value.current_condition[0].temp_F}°
+              {tempUnit === 'C' ? weatherData.value.current_condition[0].temp_C : weatherData.value.current_condition[0].temp_F}°
             </Text>
-            <Text fontSize="2rem" variant="secondary">F</Text>
+            <Text fontSize="2rem" variant="secondary">{tempUnit}</Text>
           </HStack>
           <Text variant="secondary" fontSize="$fontSize-lg">
-            Feels like {weatherData.value.current_condition[0].FeelsLikeF}°F
+            Feels like {tempUnit === 'C' ? weatherData.value.current_condition[0].FeelsLikeC : weatherData.value.current_condition[0].FeelsLikeF}°{tempUnit}
           </Text>
         </VStack>
 
@@ -97,7 +107,7 @@
 
     </CVStack>
 
-    <Text 
+    <Text
       when="{!weatherData.loaded && !weatherData.inProgress}"
       variant="secondary"
       horizontalAlignment="center">
