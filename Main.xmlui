@@ -19,7 +19,7 @@
           placeholder="Enter city name..."
           initialValue="{city}"
           width="15rem"
-          onDidChange="(val) => { city = val; }" />
+          onDidChange="(val) => { city = val; errorMessage = ''; if (weatherData.loaded) { errorMessage = 'Press Enter or click Get Weather to search'; } }" />
         <Button
           type="submit"
           label="Get Weather"
