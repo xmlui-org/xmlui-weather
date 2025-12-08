@@ -1,0 +1,114 @@
+<App var.city="Santa Rosa" var.errorMessage="">
+
+  <DataSource
+    id="weatherData"
+    url="https://wttr.in/{city}?format=j1"
+    error="(error) => { errorMessage = 'Could not load weather data. Please try again.'; }" />
+
+  <CVStack gap="$space-8" padding="$space-6">
+    
+    <HStack gap="$space-2" verticalAlignment="center">
+      <H1>Weather Dashboard</H1>
+    </HStack>
+
+    <Form hideButtonRow="true" onSubmit="() => { weatherData.refetch(); errorMessage = ''; }">
+      <HStack gap="$space-2" verticalAlignment="center">
+        <TextBox
+          id="cityInput"
+          placeholder="Enter city name..."
+          initialValue="{city}"
+          width="15rem"
+          onDidChange="(val) => { city = val; }" />
+        <Button
+          type="submit"
+          label="Get Weather"
+          enabled="{city.trim().length > 0}" />
+      </HStack>
+    </Form>
+
+    <Text when="{errorMessage}" variant="destructive">
+      {errorMessage}
+    </Text>
+
+    <VStack 
+      when="{weatherData.inProgress}"
+      gap="$space-4"
+      horizontalAlignment="center">
+      <Spinner />
+      <Text variant="secondary">Loading weather data...</Text>
+    </VStack>
+
+    <CVStack 
+      when="{weatherData.loaded && weatherData.value}"
+      gap="$space-6"
+      padding="$space-6"
+      borderRadius="$borderRadius-lg"
+      backgroundColor="$color-background-secondary">
+      
+      <VStack gap="$space-2">
+        <H2>{city}</H2>
+        <Text variant="secondary">{weatherData.value.nearest_area[0].country[0].value}</Text>
+      </VStack>
+
+      <HStack gap="$space-8" verticalAlignment="center">
+        <VStack gap="$space-2">
+          <HStack gap="$space-2" verticalAlignment="baseline">
+            <Text fontSize="4rem" fontWeight="bold">
+              {weatherData.value.current_condition[0].temp_F}°
+            </Text>
+            <Text fontSize="2rem" variant="secondary">F</Text>
+          </HStack>
+          <Text variant="secondary" fontSize="$fontSize-lg">
+            Feels like {weatherData.value.current_condition[0].FeelsLikeF}°F
+          </Text>
+        </VStack>
+
+        <VStack gap="$space-3">
+          <Text fontSize="$fontSize-xl" fontWeight="semibold">
+            {weatherData.value.current_condition[0].weatherDesc[0].value}
+          </Text>
+        </VStack>
+      </HStack>
+
+      <HStack gap="$space-6" wrapContent="true">
+        <VStack gap="$space-1" minWidth="8rem">
+          <Text variant="secondary" fontSize="$fontSize-sm">Cloud Cover</Text>
+          <Text fontWeight="semibold">
+            {weatherData.value.current_condition[0].cloudcover}%
+          </Text>
+        </VStack>
+
+        <VStack gap="$space-1" minWidth="8rem">
+          <Text variant="secondary" fontSize="$fontSize-sm">Humidity</Text>
+          <Text fontWeight="semibold">
+            {weatherData.value.current_condition[0].humidity}%
+          </Text>
+        </VStack>
+
+        <VStack gap="$space-1" minWidth="8rem">
+          <Text variant="secondary" fontSize="$fontSize-sm">Wind Speed</Text>
+          <Text fontWeight="semibold">
+            {weatherData.value.current_condition[0].windspeedMiles} mph
+          </Text>
+        </VStack>
+
+        <VStack gap="$space-1" minWidth="8rem">
+          <Text variant="secondary" fontSize="$fontSize-sm">Pressure</Text>
+          <Text fontWeight="semibold">
+            {weatherData.value.current_condition[0].pressure} mb
+          </Text>
+        </VStack>
+      </HStack>
+
+    </CVStack>
+
+    <Text 
+      when="{!weatherData.loaded && !weatherData.inProgress}"
+      variant="secondary"
+      horizontalAlignment="center">
+      Enter a city name to see current weather conditions
+    </Text>
+
+  </CVStack>
+
+</App>
