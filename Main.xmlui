@@ -1,10 +1,10 @@
-<App var.city="Santa Rosa, CA" var.errorMessage="" var.tempUnit="F">
+<App var.city="Santa Rosa, CA" var.searchCity="Santa Rosa, CA" var.errorMessage="" var.tempUnit="F">
 
   <DataSource
     id="weatherData"
-    url="https://wttr.in/{city}?format=j1"
+    url="https://wttr.in/{searchCity}?format=j1"
     errorNotificationMessage=""
-    onError="(error) => { errorMessage = 'Could not find weather data for ' + city + '. Please check the city name.'; }" />
+    onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; }" />
 
   <CVStack gap="$space-8" padding="$space-6">
 
@@ -12,15 +12,18 @@
       <H1>Weather Dashboard</H1>
     </HStack>
 
-    <HStack gap="$space-4" verticalAlignment="center">
-      <TextBox
-        id="cityInput"
-        placeholder="Enter city name..."
-        initialValue="{city}"
-        width="15rem"
-        onDidChange="(val) => { city = val; }"
-        onLostFocus="() => { weatherData.refetch(); errorMessage = ''; }" />
+    <Form hideButtonRow="true" onSubmit="() => { searchCity = city; errorMessage = ''; }">
       <HStack gap="$space-2" verticalAlignment="center">
+        <TextBox
+          id="cityInput"
+          placeholder="Enter city name..."
+          initialValue="{city}"
+          width="15rem"
+          onDidChange="(val) => { city = val; }" />
+        <Button
+          type="submit"
+          label="Get Weather"
+          enabled="{city.trim().length > 0}" />
         <RadioGroup
           initialValue="{tempUnit}"
           onDidChange="(val) => { tempUnit = val; }">
@@ -30,7 +33,7 @@
           </HStack>
         </RadioGroup>
       </HStack>
-    </HStack>
+    </Form>
 
     <Text when="{errorMessage}" variant="destructive">
       {errorMessage}
@@ -44,8 +47,8 @@
       <Text variant="secondary">Loading weather data...</Text>
     </VStack>
 
-    <CVStack
-      when="{weatherData.loaded && weatherData.value}"
+    <CVStack 
+      when="{weatherData.loaded && weatherData.value && !errorMessage}"
       gap="$space-6"
       padding="$space-6"
       borderRadius="$borderRadius-lg"
