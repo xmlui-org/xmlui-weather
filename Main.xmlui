@@ -1,4 +1,4 @@
-<App var.city="Santa Rosa, CA" var.searchCity="Santa Rosa, CA" var.errorMessage="" var.tempUnit="F">
+<App var.city="Santa Rosa, CA" var.searchCity="Santa Rosa, CA" var.errorMessage="" var.tempUnit="F" var.isDirty="{false}">
 
   <DataSource
     id="weatherData"
@@ -12,14 +12,14 @@
       <H1>Weather Dashboard</H1>
     </HStack>
 
-    <Form hideButtonRow="true" onSubmit="() => { searchCity = city; errorMessage = ''; }">
+    <Form hideButtonRow="true" onSubmit="() => { searchCity = city; errorMessage = ''; isDirty = false; }">
       <HStack gap="$space-2" verticalAlignment="center">
         <TextBox
           id="cityInput"
           placeholder="Enter city name..."
           initialValue="{city}"
           width="15rem"
-          onDidChange="(val) => { city = val; errorMessage = ''; if (weatherData.loaded) { errorMessage = 'Press Enter or click Get Weather to search'; } }" />
+          onDidChange="(val) => { city = val; isDirty = true; }" />
         <Button
           type="submit"
           label="Get Weather"
@@ -48,7 +48,7 @@
     </VStack>
 
     <CVStack 
-      when="{weatherData.loaded && weatherData.value && !errorMessage}"
+      when="{weatherData.loaded && weatherData.value && !errorMessage && !isDirty}"
       gap="$space-6"
       padding="$space-6"
       borderRadius="$borderRadius-lg"
