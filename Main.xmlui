@@ -4,7 +4,7 @@
     id="weatherData"
     url="https://wttr.in/{searchCity}?format=j1"
     errorNotificationMessage=""
-    onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; }" />
+    onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; isDirty = false; }" />
 
   <CVStack gap="$space-8" padding="$space-6">
 
@@ -55,8 +55,10 @@
       backgroundColor="$color-background-secondary">
 
       <VStack gap="$space-2">
-        <H2>{city}</H2>
-        <Text variant="secondary">{weatherData.value.nearest_area[0].country[0].value}</Text>
+        <H2>{searchCity}</H2>
+        <Text variant="secondary">
+          {weatherData.value.nearest_area[0].region && weatherData.value.nearest_area[0].region[0] && weatherData.value.nearest_area[0].region[0].value ? weatherData.value.nearest_area[0].region[0].value + ', ' : ''}{weatherData.value.nearest_area[0].country[0].value}
+        </Text>
       </VStack>
 
       <HStack gap="$space-8" verticalAlignment="center">
