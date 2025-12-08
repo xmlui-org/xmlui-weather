@@ -1,9 +1,9 @@
-<App var.city="Santa Rosa" var.errorMessage="">
+<App var.city="Santa Rosa, CA" var.errorMessage="">
 
   <DataSource
     id="weatherData"
     url="https://wttr.in/{city}?format=j1"
-    error="(error) => { errorMessage = 'Could not load weather data. Please try again.'; }" />
+    onError="(error) => { errorMessage = 'Could not load weather data. Please try again.'; }" />
 
   <CVStack gap="$space-8" padding="$space-6">
     
@@ -11,20 +11,15 @@
       <H1>Weather Dashboard</H1>
     </HStack>
 
-    <Form hideButtonRow="true" onSubmit="() => { weatherData.refetch(); errorMessage = ''; }">
-      <HStack gap="$space-2" verticalAlignment="center">
-        <TextBox
-          id="cityInput"
-          placeholder="Enter city name..."
-          initialValue="{city}"
-          width="15rem"
-          onDidChange="(val) => { city = val; }" />
-        <Button
-          type="submit"
-          label="Get Weather"
-          enabled="{city.trim().length > 0}" />
-      </HStack>
-    </Form>
+    <HStack gap="$space-2" verticalAlignment="center">
+      <TextBox
+        id="cityInput"
+        placeholder="Enter city name..."
+        initialValue="{city}"
+        width="15rem"
+        onDidChange="(val) => { city = val; }"
+        onLostFocus="() => { weatherData.refetch(); errorMessage = ''; }" />
+    </HStack>
 
     <Text when="{errorMessage}" variant="destructive">
       {errorMessage}
