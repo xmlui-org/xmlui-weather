@@ -6,14 +6,12 @@
     errorNotificationMessage=""
     onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; isDirty = false; }" />
 
-  <CVStack gap="$space-8" padding="$space-6">
+  <CVStack>
 
-    <HStack gap="$space-2" verticalAlignment="center">
-      <H1>Weather Dashboard</H1>
-    </HStack>
+   <H1>Weather Dashboard</H1>
 
     <Form hideButtonRow="true" onSubmit="() => { searchCity = city; errorMessage = ''; isDirty = false; }">
-      <HStack gap="$space-2" verticalAlignment="center">
+      <HStack verticalAlignment="center">
         <TextBox
           id="cityInput"
           placeholder="Enter city name..."
@@ -27,7 +25,7 @@
         <RadioGroup
           initialValue="{tempUnit}"
           onDidChange="(val) => { tempUnit = val; }">
-          <HStack gap="$space-2">
+          <HStack>
             <Option label="°F" value="F" />
             <Option label="°C" value="C" />
           </HStack>
@@ -41,17 +39,13 @@
 
     <VStack
       when="{weatherData.inProgress}"
-      gap="$space-4"
       horizontalAlignment="center">
       <Spinner />
       <Text variant="secondary">Loading weather data...</Text>
     </VStack>
 
-    <CVStack 
+    <CVStack
       when="{weatherData.loaded && weatherData.value && !errorMessage && !isDirty}"
-      gap="$space-6"
-      padding="$space-6"
-      borderRadius="$borderRadius-lg"
       backgroundColor="$color-background-secondary">
 
       <VStack gap="$space-2">
@@ -61,9 +55,9 @@
         </Text>
       </VStack>
 
-      <HStack gap="$space-8" verticalAlignment="center">
-        <VStack gap="$space-2">
-          <HStack gap="$space-2" verticalAlignment="baseline">
+      <HStack verticalAlignment="center">
+        <VStack>
+          <HStack verticalAlignment="center">
             <Text fontSize="4rem" fontWeight="bold">
               {tempUnit === 'C' ? weatherData.value.current_condition[0].temp_C : weatherData.value.current_condition[0].temp_F}°
             </Text>
