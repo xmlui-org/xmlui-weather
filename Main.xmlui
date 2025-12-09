@@ -46,7 +46,7 @@
       when="{weatherData.loaded && weatherData.value && !errorMessage && !isDirty}"
       backgroundColor="$color-background-secondary">
 
-      <VStack>
+      <VStack horizontalAlignment="center" gap="0">
         <H2>{searchCity}</H2>
         <Text variant="secondary">
           {weatherData.value.nearest_area[0].region && weatherData.value.nearest_area[0].region[0] && weatherData.value.nearest_area[0].region[0].value ? weatherData.value.nearest_area[0].region[0].value + ', ' : ''}{weatherData.value.nearest_area[0].country[0].value}
@@ -69,33 +69,18 @@
       </HStack>
 
       <HStack>
-        <VStack gap="$space-1" minWidth="8rem">
-          <Text variant="secondary" fontSize="$fontSize-sm">Cloud Cover</Text>
-          <Text fontWeight="semibold">
-            {weatherData.value.current_condition[0].cloudcover}%
-          </Text>
-        </VStack>
-
-        <VStack gap="$space-1" minWidth="8rem">
-          <Text variant="secondary" fontSize="$fontSize-sm">Humidity</Text>
-          <Text fontWeight="semibold">
-            {weatherData.value.current_condition[0].humidity}%
-          </Text>
-        </VStack>
-
-        <VStack gap="$space-1" minWidth="8rem">
-          <Text variant="secondary" fontSize="$fontSize-sm">Wind Speed</Text>
-          <Text fontWeight="semibold">
-            {weatherData.value.current_condition[0].windspeedMiles} mph
-          </Text>
-        </VStack>
-
-        <VStack gap="$space-1" minWidth="8rem">
-          <Text variant="secondary" fontSize="$fontSize-sm">Pressure</Text>
-          <Text fontWeight="semibold">
-            {weatherData.value.current_condition[0].pressure} mb
-          </Text>
-        </VStack>
+        <WeatherStat
+          label="Cloud Cover"
+          value="{weatherData.value.current_condition[0].cloudcover}%" />
+        <WeatherStat
+          label="Humidity"
+          value="{weatherData.value.current_condition[0].humidity}%" />
+        <WeatherStat
+          label="Wind Speed"
+          value="{weatherData.value.current_condition[0].windspeedMiles} mph" />
+        <WeatherStat
+          label="Pressure"
+          value="{weatherData.value.current_condition[0].pressure} mb" />
       </HStack>
 
     </CVStack>
