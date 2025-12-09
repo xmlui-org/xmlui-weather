@@ -86,7 +86,7 @@
         </Text>
       </HStack>
 
-      <HStack>
+      <HStack horizontalAlignment="center">
         <WeatherStat
           label="Cloud Cover"
           value="{condition.cloudcover}%" />
@@ -101,7 +101,7 @@
           value="{condition.pressure} mb" />
       </HStack>
 
-      <HStack>
+      <HStack horizontalAlignment="center">
         <WeatherStat
           label="Sunrise"
           value="{astronomy.sunrise}" />
