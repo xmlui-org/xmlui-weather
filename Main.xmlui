@@ -10,28 +10,26 @@
 
    <H1>Weather Dashboard</H1>
 
-    <Form hideButtonRow="true" onSubmit="() => { searchCity = city; errorMessage = ''; isDirty = false; }">
-      <HStack verticalAlignment="center">
-        <TextBox
-          id="cityInput"
-          placeholder="Enter city name..."
-          initialValue="{city}"
-          width="15rem"
-          onDidChange="(val) => { city = val; isDirty = true; }" />
-        <Button
-          type="submit"
-          label="Get Weather"
-          enabled="{city.trim().length > 0}" />
-        <RadioGroup
-          initialValue="{tempUnit}"
-          onDidChange="(val) => { tempUnit = val; }">
-          <HStack>
-            <Option label="°F" value="F" />
-            <Option label="°C" value="C" />
-          </HStack>
-        </RadioGroup>
-      </HStack>
-    </Form>
+    <HStack verticalAlignment="center">
+      <TextBox
+        id="cityInput"
+        placeholder="Enter city name..."
+        initialValue="{city}"
+        width="15rem"
+        onDidChange="(val) => { city = val; isDirty = true; }" />
+      <Button
+        label="Get Weather"
+        enabled="{city.trim().length > 0}"
+        onClick="() => { searchCity = city; errorMessage = ''; isDirty = false; }" />
+      <RadioGroup
+        initialValue="{tempUnit}"
+        onDidChange="(val) => { tempUnit = val; }">
+        <HStack>
+          <Option label="°F" value="F" />
+          <Option label="°C" value="C" />
+        </HStack>
+      </RadioGroup>
+    </HStack>
 
     <Text when="{errorMessage}" variant="destructive">
       {errorMessage}
@@ -48,7 +46,7 @@
       when="{weatherData.loaded && weatherData.value && !errorMessage && !isDirty}"
       backgroundColor="$color-background-secondary">
 
-      <VStack gap="$space-2">
+      <VStack>
         <H2>{searchCity}</H2>
         <Text variant="secondary">
           {weatherData.value.nearest_area[0].region && weatherData.value.nearest_area[0].region[0] && weatherData.value.nearest_area[0].region[0].value ? weatherData.value.nearest_area[0].region[0].value + ', ' : ''}{weatherData.value.nearest_area[0].country[0].value}
@@ -70,7 +68,7 @@
         </Text>
       </HStack>
 
-      <HStack gap="$space-6" wrapContent="true">
+      <HStack>
         <VStack gap="$space-1" minWidth="8rem">
           <Text variant="secondary" fontSize="$fontSize-sm">Cloud Cover</Text>
           <Text fontWeight="semibold">
