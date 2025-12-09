@@ -56,23 +56,18 @@
       </VStack>
 
       <HStack verticalAlignment="center">
-        <VStack>
-          <HStack verticalAlignment="center">
-            <Text fontSize="4rem" fontWeight="bold">
-              {tempUnit === 'C' ? weatherData.value.current_condition[0].temp_C : weatherData.value.current_condition[0].temp_F}°
-            </Text>
-            <Text fontSize="2rem" variant="secondary">{tempUnit}</Text>
-          </HStack>
-          <Text variant="secondary" fontSize="$fontSize-lg">
-            Feels like {tempUnit === 'C' ? weatherData.value.current_condition[0].FeelsLikeC : weatherData.value.current_condition[0].FeelsLikeF}°{tempUnit}
+        <HStack verticalAlignment="center">
+          <Text fontSize="4rem" fontWeight="bold">
+            {tempUnit === 'C' ? weatherData.value.current_condition[0].temp_C : weatherData.value.current_condition[0].temp_F}°
           </Text>
-        </VStack>
-
-        <VStack gap="$space-3">
+          <Text fontSize="2rem" variant="secondary">{tempUnit}</Text>
           <Text fontSize="$fontSize-xl" fontWeight="semibold">
             {weatherData.value.current_condition[0].weatherDesc[0].value}
           </Text>
-        </VStack>
+        </HStack>
+        <Text variant="secondary" fontSize="$fontSize-lg">
+          Feels like {tempUnit === 'C' ? weatherData.value.current_condition[0].FeelsLikeC : weatherData.value.current_condition[0].FeelsLikeF}°{tempUnit}
+        </Text>
       </HStack>
 
       <HStack gap="$space-6" wrapContent="true">
