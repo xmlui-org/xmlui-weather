@@ -5,11 +5,9 @@
   var.tempUnit="F"
   var.isDirty="{false}"
   var.condition="{ weatherData.value.current_condition[0] }"
-  var.nearest_area="{ weatherData.value.nearest_area[0] }"
->
+  var.nearest_area="{ weatherData.value.nearest_area[0] }">
 
   <!-- <Text preserveLinebreaks="true">condition: { condition }</Text> -->
-
 
   <DataSource
     id="weatherData"
@@ -19,7 +17,9 @@
 
   <CVStack>
 
-   <H1>Weather Dashboard</H1>
+    <H1>
+      Weather Dashboard
+    </H1>
 
     <HStack verticalAlignment="center">
       <TextBox
@@ -50,7 +50,9 @@
       when="{weatherData.inProgress}"
       horizontalAlignment="center">
       <Spinner />
-      <Text variant="secondary">Loading weather data...</Text>
+      <Text variant="secondary">
+        Loading weather data...
+      </Text>
     </VStack>
 
     <CVStack
@@ -58,7 +60,9 @@
       backgroundColor="$color-background-secondary">
 
       <VStack horizontalAlignment="center" gap="0">
-        <H2>{searchCity}</H2>
+        <H2>
+          {searchCity}
+        </H2>
         <Text variant="secondary">
           {nearest_area.region && nearest_area.region[0] && nearest_area.region[0].value ? nearest_area.region[0].value + ', ' : ''}{nearest_area.country[0].value}
         </Text>
@@ -69,7 +73,9 @@
           <Text fontSize="4rem" fontWeight="bold">
             {tempUnit === 'C' ? condition.temp_C : condition.temp_F}°
           </Text>
-          <Text fontSize="2rem" variant="secondary">{tempUnit}</Text>
+          <Text fontSize="2rem" variant="secondary">
+            {tempUnit}
+          </Text>
           <Text fontSize="$fontSize-xl" fontWeight="semibold">
             {condition.weatherDesc[0].value}
           </Text>
@@ -79,7 +85,7 @@
         </Text>
       </HStack>
 
-     <CHStack>
+      <HStack>
         <WeatherStat
           label="Cloud Cover"
           value="{condition.cloudcover}%" />
@@ -92,8 +98,7 @@
         <WeatherStat
           label="Pressure"
           value="{condition.pressure} mb" />
-      </CHStack>
-
+      </HStack>
 
     </CVStack>
 
