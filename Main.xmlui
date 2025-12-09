@@ -5,7 +5,8 @@
   var.tempUnit="F"
   var.isDirty="{false}"
   var.condition="{ weatherData.value.current_condition[0] }"
-  var.nearest_area="{ weatherData.value.nearest_area[0] }">
+  var.nearest_area="{ weatherData.value.nearest_area[0] }"
+  var.astronomy="{ weatherData.value.weather[0].astronomy[0] }">
 
   <!-- <Text preserveLinebreaks="true">condition: { condition }</Text> -->
 
@@ -98,6 +99,21 @@
         <WeatherStat
           label="Pressure"
           value="{condition.pressure} mb" />
+      </HStack>
+
+      <HStack>
+        <WeatherStat
+          label="Sunrise"
+          value="{astronomy.sunrise}" />
+        <WeatherStat
+          label="Sunset"
+          value="{astronomy.sunset}" />
+        <WeatherStat
+          label="Moonrise"
+          value="{astronomy.moonrise}" />
+        <WeatherStat
+          label="Moonset"
+          value="{astronomy.moonset}" />
       </HStack>
 
     </CVStack>
