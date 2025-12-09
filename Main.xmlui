@@ -1,4 +1,15 @@
-<App var.city="Santa Rosa, CA" var.searchCity="Santa Rosa, CA" var.errorMessage="" var.tempUnit="F" var.isDirty="{false}">
+<App
+  var.city="Santa Rosa, CA"
+  var.searchCity="Santa Rosa, CA"
+  var.errorMessage=""
+  var.tempUnit="F"
+  var.isDirty="{false}"
+  var.condition="{ weatherData.value.current_condition[0] }"
+  var.nearest_area="{ weatherData.value.nearest_area[0] }"
+>
+
+  <!-- <Text preserveLinebreaks="true">condition: { condition }</Text> -->
+
 
   <DataSource
     id="weatherData"
@@ -49,39 +60,40 @@
       <VStack horizontalAlignment="center" gap="0">
         <H2>{searchCity}</H2>
         <Text variant="secondary">
-          {weatherData.value.nearest_area[0].region && weatherData.value.nearest_area[0].region[0] && weatherData.value.nearest_area[0].region[0].value ? weatherData.value.nearest_area[0].region[0].value + ', ' : ''}{weatherData.value.nearest_area[0].country[0].value}
+          {nearest_area.region && nearest_area.region[0] && nearest_area.region[0].value ? nearest_area.region[0].value + ', ' : ''}{nearest_area.country[0].value}
         </Text>
       </VStack>
 
       <HStack verticalAlignment="center">
         <HStack verticalAlignment="center">
           <Text fontSize="4rem" fontWeight="bold">
-            {tempUnit === 'C' ? weatherData.value.current_condition[0].temp_C : weatherData.value.current_condition[0].temp_F}°
+            {tempUnit === 'C' ? condition.temp_C : condition.temp_F}°
           </Text>
           <Text fontSize="2rem" variant="secondary">{tempUnit}</Text>
           <Text fontSize="$fontSize-xl" fontWeight="semibold">
-            {weatherData.value.current_condition[0].weatherDesc[0].value}
+            {condition.weatherDesc[0].value}
           </Text>
         </HStack>
         <Text variant="secondary" fontSize="$fontSize-lg">
-          Feels like {tempUnit === 'C' ? weatherData.value.current_condition[0].FeelsLikeC : weatherData.value.current_condition[0].FeelsLikeF}°{tempUnit}
+          Feels like {tempUnit === 'C' ? condition.FeelsLikeC : condition.FeelsLikeF}°{tempUnit}
         </Text>
       </HStack>
 
-      <HStack>
+     <CHStack>
         <WeatherStat
           label="Cloud Cover"
-          value="{weatherData.value.current_condition[0].cloudcover}%" />
+          value="{condition.cloudcover}%" />
         <WeatherStat
           label="Humidity"
-          value="{weatherData.value.current_condition[0].humidity}%" />
+          value="{condition.humidity}%" />
         <WeatherStat
           label="Wind Speed"
-          value="{weatherData.value.current_condition[0].windspeedMiles} mph" />
+          value="{condition.windspeedMiles} mph" />
         <WeatherStat
           label="Pressure"
-          value="{weatherData.value.current_condition[0].pressure} mb" />
-      </HStack>
+          value="{condition.pressure} mb" />
+      </CHStack>
+
 
     </CVStack>
 
