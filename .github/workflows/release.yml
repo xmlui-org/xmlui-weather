@@ -1,0 +1,55 @@
+name: Release Zip
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag name to release (e.g., v1.0.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Create zip archive with top-level folder
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Listing files ==="
+          ls -la
+          echo "=== Creating xmlui-weather folder ==="
+          mkdir -p xmlui-weather
+          echo "=== Copying files ==="
+          cp -v -r Main.xmlui components index.html start.sh start.bat README.md xmlui-weather/
+          echo "=== Contents of xmlui-weather ==="
+          ls -la xmlui-weather/
+          echo "=== Creating zip ==="
+          zip -r xmlui-weather.zip xmlui-weather
+          echo "=== Zip created ==="
+          ls -lh xmlui-weather.zip
+
+      - name: Publish release assets
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          target_commitish: ${{ github.sha }}
+          files: xmlui-weather.zip
+          body: |
+            Instructions:
+            - Download xmlui-weather.zip from the assets below and unzip it.
+            - On macOS/Linux run: cd xmlui-weather && ./start.sh
+            - On Windows run: cd xmlui-weather && start.bat
+            - Visit localhost:8000
