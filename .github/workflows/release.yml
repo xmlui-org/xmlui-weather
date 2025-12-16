@@ -31,7 +31,7 @@ jobs:
           echo "=== Creating xmlui-weather folder ==="
           mkdir -p xmlui-weather
           echo "=== Copying files ==="
-          cp -v -r Main.xmlui components index.html start.sh start.bat README.md xmlui-weather/
+          cp -v -r Main.xmlui components index.html README.md xmlui-weather/
           echo "=== Contents of xmlui-weather ==="
           ls -la xmlui-weather/
           echo "=== Creating zip ==="
@@ -49,7 +49,4 @@ jobs:
           files: xmlui-weather.zip
           body: |
             Instructions:
-            - Download xmlui-weather.zip from the assets below and unzip it.
-            - On macOS/Linux run: cd xmlui-weather && ./start.sh
-            - On Windows run: cd xmlui-weather && start.bat
-            - Visit localhost:8000
+              - tbd
