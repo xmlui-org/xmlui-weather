@@ -8,8 +8,6 @@
   var.nearest_area="{ weatherData.value.nearest_area[0] }"
   var.astronomy="{ weatherData.value.weather[0].astronomy[0] }">
 
-  <!-- <Text preserveLinebreaks="true">condition: { condition }</Text> -->
-
   <DataSource
     id="weatherData"
     url="https://wttr.in/{searchCity}?format=j1"
@@ -86,7 +84,7 @@
         </Text>
       </HStack>
 
-      <HStack horizontalAlignment="center">
+      <HStack>
         <WeatherStat
           label="Cloud Cover"
           value="{condition.cloudcover}%" />
@@ -101,7 +99,7 @@
           value="{condition.pressure} mb" />
       </HStack>
 
-      <HStack horizontalAlignment="center">
+      <HStack>
         <WeatherStat
           label="Sunrise"
           value="{astronomy.sunrise}" />
