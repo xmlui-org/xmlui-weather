@@ -3,7 +3,6 @@
   var.searchCity="Santa Rosa, CA"
   var.errorMessage=""
   var.tempUnit="F"
-  var.isDirty="{false}"
   var.condition="{ weatherData.value.current_condition[0] }"
   var.nearest_area="{ weatherData.value.nearest_area[0] }"
   var.astronomy="{ weatherData.value.weather[0].astronomy[0] }">
@@ -14,25 +13,26 @@
     id="weatherData"
     url="https://wttr.in/{searchCity}?format=j1"
     errorNotificationMessage=""
-    onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; isDirty = false; }" />
+    onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; }" />
 
   <CVStack>
 
     <H1>
       Weather Dashboard
     </H1>
-
+    
     <HStack verticalAlignment="center">
       <TextBox
         id="cityInput"
+        enabled="{!weatherData.inProgress}"
         placeholder="Enter city name..."
         initialValue="{city}"
         width="15rem"
-        onDidChange="(val) => { city = val; isDirty = true; }" />
+        onDidChange="(val) => { city = val; }" />
       <Button
         label="Get Weather"
         enabled="{city.trim().length > 0}"
-        onClick="() => { searchCity = city; errorMessage = ''; isDirty = false; }" />
+        onClick="() => { searchCity = city; errorMessage = ''}" />
       <RadioGroup
         initialValue="{tempUnit}"
         onDidChange="(val) => { tempUnit = val; }">
@@ -57,7 +57,7 @@
     </VStack>
 
     <CVStack
-      when="{weatherData.loaded && weatherData.value && !errorMessage && !isDirty}"
+      when="{weatherData.loaded && weatherData.value && !errorMessage && city === searchCity}"
       backgroundColor="$color-background-secondary">
 
       <VStack horizontalAlignment="center" gap="0">
