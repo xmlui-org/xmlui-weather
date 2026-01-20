@@ -15,7 +15,7 @@
     errorNotificationMessage=""
     onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; }" />
 
-  <CVStack>
+  <VStack horizontalAlignment="center" width="100%">
 
     <HStack horizontalAlignment="center">
       <H1>
@@ -72,8 +72,11 @@
       </Text>
     </VStack>
 
-    <CVStack
+    <VStack
       when="{weatherData.loaded && weatherData.value && !errorMessage && city === searchCity}"
+      width="100%"
+      maxWidth="42rem"
+      horizontalAlignment="center"
       backgroundColor="$color-background-secondary">
 
       <VStack horizontalAlignment="center" gap="0">
@@ -105,45 +108,45 @@
         </Text>
       </HStack>
 
-      <VStack horizontalAlignment="center">
-        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
-          <WeatherStat
-            label="Cloud Cover"
-            value="{condition.cloudcover}%" />
-          <WeatherStat
-            label="Humidity"
-            value="{condition.humidity}%" />
-        </HStack>
-        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
-          <WeatherStat
-            label="Wind Speed"
-            value="{condition.windspeedMiles} mph" />
-          <WeatherStat
-            label="Pressure"
-            value="{condition.pressure} mb" />
-        </HStack>
-      </VStack>
+      <HStack horizontalAlignment="center" width="100%" wrapContent="true">
+        <WeatherStat
+          width="9rem"
+          label="Cloud Cover"
+          value="{condition.cloudcover}%" />
+        <WeatherStat
+          width="9rem"
+          label="Humidity"
+          value="{condition.humidity}%" />
+        <WeatherStat
+          width="9rem"
+          label="Wind Speed"
+          value="{condition.windspeedMiles} mph" />
+        <WeatherStat
+          width="9rem"
+          label="Pressure"
+          value="{condition.pressure} mb" />
+      </HStack>
 
-      <VStack horizontalAlignment="center">
-        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
-          <WeatherStat
-            label="Sunrise"
-            value="{astronomy.sunrise}" />
-          <WeatherStat
-            label="Sunset"
-            value="{astronomy.sunset}" />
-        </HStack>
-        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
-          <WeatherStat
-            label="Moonrise"
-            value="{astronomy.moonrise}" />
-          <WeatherStat
-            label="Moonset"
-            value="{astronomy.moonset}" />
-        </HStack>
-      </VStack>
+      <HStack horizontalAlignment="center" width="100%" wrapContent="true">
+        <WeatherStat
+          width="9rem"
+          label="Sunrise"
+          value="{astronomy.sunrise}" />
+        <WeatherStat
+          width="9rem"
+          label="Sunset"
+          value="{astronomy.sunset}" />
+        <WeatherStat
+          width="9rem"
+          label="Moonrise"
+          value="{astronomy.moonrise}" />
+        <WeatherStat
+          width="9rem"
+          label="Moonset"
+          value="{astronomy.moonset}" />
+      </HStack>
 
-    </CVStack>
+    </VStack>
 
     <Text
       when="{!weatherData.loaded && !weatherData.inProgress}"
@@ -152,6 +155,6 @@
       Enter a city name to see current weather conditions
     </Text>
 
-  </CVStack>
+  </VStack>
 
 </App>

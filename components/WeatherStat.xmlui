@@ -1,5 +1,8 @@
 <Component name="WeatherStat">
-  <VStack gap="$space-1" minWidth="8rem" horizontalAlignment="center">
+  <VStack
+    gap="$space-1"
+    minWidth="8rem"
+    horizontalAlignment="center">
     <Text variant="secondary" fontSize="$fontSize-sm">{$props.label}</Text>
     <Text fontWeight="semibold">{$props.value}</Text>
   </VStack>
