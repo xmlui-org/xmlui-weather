@@ -21,26 +21,35 @@
       Weather Dashboard
     </H1>
     
-    <HStack verticalAlignment="center">
-      <TextBox
-        id="cityInput"
-        enabled="{!weatherData.inProgress}"
-        placeholder="Enter city name..."
-        initialValue="{city}"
-        width="15rem"
-        onDidChange="(val) => { city = val; }" />
-      <Button
-        label="Get Weather"
-        enabled="{city.trim().length > 0}"
-        onClick="() => { searchCity = city; errorMessage = ''}" />
-      <RadioGroup
-        initialValue="{tempUnit}"
-        onDidChange="(val) => { tempUnit = val; }">
-        <HStack>
-          <Option label="°F" value="F" />
-          <Option label="°C" value="C" />
-        </HStack>
-      </RadioGroup>
+    <HStack
+      verticalAlignment="center"
+      horizontalAlignment="center"
+      wrapContent="true"
+      width="100%">
+      <HStack verticalAlignment="center" wrapContent="true">
+        <TextBox
+          id="cityInput"
+          enabled="{!weatherData.inProgress}"
+          placeholder="Enter city name..."
+          initialValue="{city}"
+          minWidth="10rem"
+          width="14rem"
+          onDidChange="(val) => { city = val; }" />
+        <Button
+          label="Get Weather"
+          enabled="{city.trim().length > 0}"
+          onClick="() => { searchCity = city; errorMessage = ''}" />
+      </HStack>
+      <HStack horizontalAlignment="center">
+        <RadioGroup
+          initialValue="{tempUnit}"
+          onDidChange="(val) => { tempUnit = val; }">
+          <HStack>
+            <Option label="°F" value="F" />
+            <Option label="°C" value="C" />
+          </HStack>
+        </RadioGroup>
+      </HStack>
     </HStack>
 
     <Text when="{errorMessage}" variant="destructive">
@@ -69,7 +78,10 @@
         </Text>
       </VStack>
 
-      <HStack verticalAlignment="center">
+      <HStack
+        verticalAlignment="center"
+        horizontalAlignment="center"
+        wrapContent="true">
         <HStack verticalAlignment="center">
           <Text fontSize="4rem" fontWeight="bold">
             {tempUnit === 'C' ? condition.temp_C : condition.temp_F}°
@@ -86,35 +98,43 @@
         </Text>
       </HStack>
 
-      <HStack horizontalAlignment="center">
-        <WeatherStat
-          label="Cloud Cover"
-          value="{condition.cloudcover}%" />
-        <WeatherStat
-          label="Humidity"
-          value="{condition.humidity}%" />
-        <WeatherStat
-          label="Wind Speed"
-          value="{condition.windspeedMiles} mph" />
-        <WeatherStat
-          label="Pressure"
-          value="{condition.pressure} mb" />
-      </HStack>
+      <VStack horizontalAlignment="center">
+        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
+          <WeatherStat
+            label="Cloud Cover"
+            value="{condition.cloudcover}%" />
+          <WeatherStat
+            label="Humidity"
+            value="{condition.humidity}%" />
+        </HStack>
+        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
+          <WeatherStat
+            label="Wind Speed"
+            value="{condition.windspeedMiles} mph" />
+          <WeatherStat
+            label="Pressure"
+            value="{condition.pressure} mb" />
+        </HStack>
+      </VStack>
 
-      <HStack horizontalAlignment="center">
-        <WeatherStat
-          label="Sunrise"
-          value="{astronomy.sunrise}" />
-        <WeatherStat
-          label="Sunset"
-          value="{astronomy.sunset}" />
-        <WeatherStat
-          label="Moonrise"
-          value="{astronomy.moonrise}" />
-        <WeatherStat
-          label="Moonset"
-          value="{astronomy.moonset}" />
-      </HStack>
+      <VStack horizontalAlignment="center">
+        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
+          <WeatherStat
+            label="Sunrise"
+            value="{astronomy.sunrise}" />
+          <WeatherStat
+            label="Sunset"
+            value="{astronomy.sunset}" />
+        </HStack>
+        <HStack horizontalAlignment="center" wrapContent="true" width="100%">
+          <WeatherStat
+            label="Moonrise"
+            value="{astronomy.moonrise}" />
+          <WeatherStat
+            label="Moonset"
+            value="{astronomy.moonset}" />
+        </HStack>
+      </VStack>
 
     </CVStack>
 
