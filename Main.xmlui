@@ -5,9 +5,9 @@
   var.tempUnit="F"
   var.condition="{ weatherData.value.current_condition[0] }"
   var.nearest_area="{ weatherData.value.nearest_area[0] }"
-  var.astronomy="{ weatherData.value.weather[0].astronomy[0] }">
-
-  <!-- <Text preserveLinebreaks="true">condition: { condition }</Text> -->
+  var.astronomy="{ weatherData.value.weather[0].astronomy[0] }"
+  var.region="{ nearest_area.region && nearest_area.region[0] && nearest_area.region[0].value }"
+>
 
   <DataSource
     id="weatherData"
@@ -17,25 +17,32 @@
 
   <CVStack>
 
-    <H1>
+    <HStack horizontalAlignment="center">
+      <H1>
       Weather Dashboard
     </H1>
-    
+    </HStack>
+
     <HStack
       verticalAlignment="center"
       horizontalAlignment="center"
       wrapContent="true"
       width="100%">
-      <HStack verticalAlignment="center" wrapContent="true">
+      <HStack
+        width="100%"
+        horizontalAlignment="center"
+        verticalAlignment="center"
+        wrapContent="true">
         <TextBox
           id="cityInput"
           enabled="{!weatherData.inProgress}"
           placeholder="Enter city name..."
           initialValue="{city}"
           minWidth="10rem"
-          width="14rem"
+          width="10rem"
           onDidChange="(val) => { city = val; }" />
         <Button
+          width="10rem"
           label="Get Weather"
           enabled="{city.trim().length > 0}"
           onClick="() => { searchCity = city; errorMessage = ''}" />
@@ -73,8 +80,8 @@
         <H2>
           {searchCity}
         </H2>
-        <Text variant="secondary">
-          {nearest_area.region && nearest_area.region[0] && nearest_area.region[0].value ? nearest_area.region[0].value + ', ' : ''}{nearest_area.country[0].value}
+        <Text breakMode="word" variant="secondary">
+          { region ? region + ', ' : ''}{nearest_area.country[0].value}
         </Text>
       </VStack>
 
