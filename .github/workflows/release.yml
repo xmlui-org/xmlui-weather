@@ -19,22 +19,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Create zip archive with top-level folder
+      - name: Create zip archive
         run: |
-          echo "=== Current directory ==="
-          pwd
-          echo "=== Listing files ==="
-          ls -la
-          echo "=== Creating xmlui-weather folder ==="
-          mkdir -p xmlui-weather
-          echo "=== Copying files ==="
-          cp -v -r Main.xmlui components index.html README.md xmlui-weather/
-          echo "=== Contents of xmlui-weather ==="
-          ls -la xmlui-weather/
-          echo "=== Creating zip ==="
-          zip -r xmlui-weather.zip xmlui-weather
-          echo "=== Zip created ==="
-          ls -lh xmlui-weather.zip
+          zip -r xmlui-weather.zip Main.xmlui components index.html xmlui README.md
 
       - name: Publish release assets
         uses: softprops/action-gh-release@v1
