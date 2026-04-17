@@ -30,8 +30,7 @@
 
     <HStack
       verticalAlignment="center"
-      horizontalAlignment="center"
-      wrapContent="true">
+      horizontalAlignment="center">
       <TextBox
         id="cityInput"
         enabled="{!weatherData.inProgress}"
@@ -44,15 +43,16 @@
         label="Get Weather"
         enabled="{city.trim().length > 0}"
         onClick="() => { searchCity = city; errorMessage = ''}" />
-      <RadioGroup
-        initialValue="{tempUnit}"
-        onDidChange="(val) => { tempUnit = val; }">
-        <HStack>
-          <Option label="°F" value="F" />
-          <Option label="°C" value="C" />
-        </HStack>
-      </RadioGroup>
     </HStack>
+
+    <RadioGroup
+      orientation="horizontal"
+      horizontalAlignment="center"
+      initialValue="{tempUnit}"
+      onDidChange="(val) => { tempUnit = val; }">
+      <Option label="°F" value="F" />
+      <Option label="°C" value="C" />
+    </RadioGroup>
 
     <Text when="{errorMessage}" variant="destructive">
       {errorMessage}
