@@ -28,7 +28,7 @@
     </H1>
     </HStack>
 
-    <HStack width="100%">
+    <HStack width="100%" verticalAlignment="center">
        <TextBox
          id="cityInput"
          enabled="{!weatherData.inProgress}"
