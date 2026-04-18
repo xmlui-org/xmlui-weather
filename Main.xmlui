@@ -7,6 +7,12 @@
   var.nearest_area="{ weatherData.value.nearest_area[0] }"
   var.astronomy="{ weatherData.value.weather[0].astronomy[0] }"
   var.region="{ nearest_area.region && nearest_area.region[0] && nearest_area.region[0].value }"
+  var.hourlyCity1="New York"
+  var.hourlySearch1="New York"
+  var.hourlyCity2="London"
+  var.hourlySearch2="London"
+  var.hourlyCity3="Tokyo"
+  var.hourlySearch3="Tokyo"
 >
   <AppHeader>
     <property name="profileMenuTemplate">
@@ -20,6 +26,10 @@
     errorNotificationMessage=""
     onError="(error) => { errorMessage = 'Could not find weather data for ' + searchCity + '. Please check the city name.'; }" />
 
+  <DataSource id="hourlyData1" url="https://wttr.in/{hourlySearch1}?format=j1" errorNotificationMessage="" />
+  <DataSource id="hourlyData2" url="https://wttr.in/{hourlySearch2}?format=j1" errorNotificationMessage="" />
+  <DataSource id="hourlyData3" url="https://wttr.in/{hourlySearch3}?format=j1" errorNotificationMessage="" />
+
   <VStack horizontalAlignment="center" width="100%">
 
     <HStack horizontalAlignment="center">
@@ -28,7 +38,7 @@
     </H1>
     </HStack>
 
-    <HStack verticalAlignment="center" horizontalAlignment="start" width="100%">
+    <HStack verticalAlignment="center" horizontalAlignment="center" width="100%">
       <TextBox
         id="cityInput"
         enabled="{!weatherData.inProgress}"
@@ -42,6 +52,9 @@
         label="Get Weather"
         enabled="{city.trim().length > 0}"
         onClick="() => { searchCity = city; errorMessage = ''}" />
+    </HStack>
+
+    <HStack horizontalAlignment="center" width="100%">
       <RadioGroup
         initialValue="{tempUnit}"
         onDidChange="(val) => { tempUnit = val; }">
@@ -147,6 +160,87 @@
       horizontalAlignment="center">
       Enter a city name to see current weather conditions
     </Text>
+
+    <H2>Hourly Temperatures</H2>
+
+    <HStack width="100%" wrapContent="true" horizontalAlignment="center">
+
+      <VStack width="20rem">
+        <HStack verticalAlignment="center" horizontalAlignment="center">
+          <TextBox
+            initialValue="{hourlyCity1}"
+            placeholder="City 1..."
+            width="10rem"
+            onDidChange="(val) => { hourlyCity1 = val; }" />
+          <Button label="Go" onClick="() => { hourlySearch1 = hourlyCity1; }" />
+        </HStack>
+        <Spinner when="{hourlyData1.inProgress}" />
+        <Table
+          when="{hourlyData1.loaded && hourlyData1.value}"
+          data="{hourlyData1.value.weather[0].hourly}"
+          maxHeight="24rem">
+          <Column header="Time" bindTo="time">
+            <Text>{ String(Math.floor(Number($item.time) / 100)).padStart(2, '0') + ':00' }</Text>
+          </Column>
+          <Column header="°F" bindTo="tempF" />
+          <Column header="°C" bindTo="tempC" />
+          <Column header="Conditions">
+            <Text>{ $item.weatherDesc[0].value }</Text>
+          </Column>
+        </Table>
+      </VStack>
+
+      <VStack width="20rem">
+        <HStack verticalAlignment="center" horizontalAlignment="center">
+          <TextBox
+            initialValue="{hourlyCity2}"
+            placeholder="City 2..."
+            width="10rem"
+            onDidChange="(val) => { hourlyCity2 = val; }" />
+          <Button label="Go" onClick="() => { hourlySearch2 = hourlyCity2; }" />
+        </HStack>
+        <Spinner when="{hourlyData2.inProgress}" />
+        <Table
+          when="{hourlyData2.loaded && hourlyData2.value}"
+          data="{hourlyData2.value.weather[0].hourly}"
+          maxHeight="24rem">
+          <Column header="Time" bindTo="time">
+            <Text>{ String(Math.floor(Number($item.time) / 100)).padStart(2, '0') + ':00' }</Text>
+          </Column>
+          <Column header="°F" bindTo="tempF" />
+          <Column header="°C" bindTo="tempC" />
+          <Column header="Conditions">
+            <Text>{ $item.weatherDesc[0].value }</Text>
+          </Column>
+        </Table>
+      </VStack>
+
+      <VStack width="20rem">
+        <HStack verticalAlignment="center" horizontalAlignment="center">
+          <TextBox
+            initialValue="{hourlyCity3}"
+            placeholder="City 3..."
+            width="10rem"
+            onDidChange="(val) => { hourlyCity3 = val; }" />
+          <Button label="Go" onClick="() => { hourlySearch3 = hourlyCity3; }" />
+        </HStack>
+        <Spinner when="{hourlyData3.inProgress}" />
+        <Table
+          when="{hourlyData3.loaded && hourlyData3.value}"
+          data="{hourlyData3.value.weather[0].hourly}"
+          maxHeight="24rem">
+          <Column header="Time" bindTo="time">
+            <Text>{ String(Math.floor(Number($item.time) / 100)).padStart(2, '0') + ':00' }</Text>
+          </Column>
+          <Column header="°F" bindTo="tempF" />
+          <Column header="°C" bindTo="tempC" />
+          <Column header="Conditions">
+            <Text>{ $item.weatherDesc[0].value }</Text>
+          </Column>
+        </Table>
+      </VStack>
+
+    </HStack>
 
   </VStack>
 
