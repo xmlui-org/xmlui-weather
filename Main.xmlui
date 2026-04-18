@@ -28,41 +28,29 @@
     </H1>
     </HStack>
 
-    <HStack
-      verticalAlignment="center"
-      horizontalAlignment="center"
-      wrapContent="true"
-      width="100%">
-      <HStack
-        width="100%"
-        horizontalAlignment="center"
-        verticalAlignment="center"
-        wrapContent="true">
-        <TextBox
-          id="cityInput"
-          enabled="{!weatherData.inProgress}"
-          placeholder="Enter city name..."
-          initialValue="{city}"
-          minWidth="10rem"
-          width="10rem"
-          onDidChange="(val) => { city = val; }" />
-        <Button
-          width="10rem"
-          label="Get Weather"
-          enabled="{city.trim().length > 0}"
-          onClick="() => { searchCity = city; errorMessage = ''}" />
-      </HStack>
-      <HStack horizontalAlignment="center">
-        <RadioGroup
-          initialValue="{tempUnit}"
-          onDidChange="(val) => { tempUnit = val; }">
-          <HStack>
-            <Option label="°F" value="F" />
-            <Option label="°C" value="C" />
-          </HStack>
-        </RadioGroup>
-      </HStack>
-    </HStack>
+    <HStack width="100%">
+       <TextBox
+         id="cityInput"
+         enabled="{!weatherData.inProgress}"
+         placeholder="Enter city name..."
+         initialValue="{city}"
+         minWidth="10rem"
+         width="10rem"
+         onDidChange="(val) => { city = val; }" />
+       <Button
+         width="10rem"
+         label="Get Weather"
+         enabled="{city.trim().length > 0}"
+         onClick="() => { searchCity = city; errorMessage = ''}" />
+       <RadioGroup
+         initialValue="{tempUnit}"
+         onDidChange="(val) => { tempUnit = val; }">
+	 <HStack>
+           <Option label="°F" value="F" />
+           <Option label="°C" value="C" />
+	 </HStack>
+       </RadioGroup>
+     </HStack>
 
     <Text when="{errorMessage}" variant="destructive">
       {errorMessage}
